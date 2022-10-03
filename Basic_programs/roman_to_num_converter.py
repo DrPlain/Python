@@ -12,18 +12,30 @@ def roman_to_num_converter(roman=""):
     
     if len(set(roman)) == 1:
         for key in all_roman_dict:
-            if list(set(roman))[0] == key or roman == key:
-                '''cases were input is key roman numeral or invalid input
+            if list(set(roman))[0] == key:
+                '''cases where input is key roman numeral or invalid input
                 where a key numeral is repeated more than 3 times'''
-                if len(roman) <= len(key*3):
+                if len(roman) > 3:
+                     return "Invalid input"
+                elif len(roman) == 1:
                     return all_roman_dict[key]
-                else:
-                    return "Invalid input"
+                elif len(roman) == 2:
+                    return all_roman_dict[key] * 2
+                elif len(roman) == 3:
+                    return all_roman_dict[key] * 3
+    else:
+        total = 0
+        for key in all_roman_dict:
+            for i, char in enumerate(roman):
+                if char == key:
+                        total += all_roman_dict[key]
+
+                
+        return total
 
 test_dict = {
     0:'Invalid input',
     "":'Empty string',
-    'LM':'Invalid input',
     'ABC':'Invalid input',
     'IIII':'Invalid input',
     'i':1,
@@ -40,6 +52,7 @@ test_dict = {
     'CDLVII':457,
     'DCCC':800,
     'CM':900,
+    'LM':950,
     'MCDXCIV':1494,
     'MMMCDLVII':3457
 }
@@ -56,6 +69,5 @@ def test(test_dict):
             print()
         
     print("Overall summary: {} out of {} tests passed".format(passed, len(test_dict)))
-    return
 
 test(test_dict)
